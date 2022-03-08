@@ -1,7 +1,17 @@
 import Plotly from 'plotly.js-dist-min'
 import Plot from 'react-plotly.js';
+import useWindowDimensions from '../useWindowDimensions';
+
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height
+    };
+  }
 
 export const TerrorDensityMap = ({data}) => {
+    const { height, width } = useWindowDimensions();
     return (
         <Plot
             onBeforeHover={console.log}
@@ -22,21 +32,15 @@ export const TerrorDensityMap = ({data}) => {
                       style: 'dark',
                       zoom: 1
                 },
-                margin: {
-                    r: 20,
-                    t: 40,
-                    b: 20,
-                    l: 20,
-                    pad: 0
-                },
+                automargin: true,
                 paper_bgcolor: '#191A1A',
                 plot_bgcolor: '#191A1A',
                 showlegend: true,
                 legend: { title:
                     { text: 'Type of Attack' }
                 },
-                height: 900,
-                width: 1500,
+                height: height,
+                width: width,
             } }
             config = {{responsive: true, mapboxAccessToken: process.env.REACT_APP_MAPBOX_TOKEN}}>
         </Plot>
